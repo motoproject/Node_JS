@@ -1,0 +1,35 @@
+Start 
+
+> sudo systemctl start mongodb
+
+Port
+netstat -plntu
+
+ sudo netstat -plten |grep java
+
+kill -9 16085/PID
+
+Status
+> sudo systemctl status mongodb
+
+Stop
+> sudo systemctl stop mongodb
+
+Restart
+> sudo systemctl restart mongodb
+
+Auto-Start
+> sudo systemctl enable mongodb
+
+Mongo Service Config File - reload
+> systemctl daemon-reload
+
+Enter into Mongodb shell
+mongodb
+
+Exit Mongodb shell
+quit()
+title: 'Neo4j Overview',description: 'Neo4j is no sql database',by_user: 'Neo4j',url: 'http://www.neo4j.com',tags: ['neo4j', 'database', 'NoSQL'],likes: 750
+
+
+> db.aggregateColl.aggregate([{$project: {"_id":0, "title":0, "description":0, "by_user":0, "url":0, "tags":1, "likes":0}}, {$unwind:}])
