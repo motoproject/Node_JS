@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 
-
 const env = require('dotenv');
 const auth = require('./users/routes/user');
 const allProducts = require('./products/routes/product');
@@ -11,7 +10,8 @@ const allProducts = require('./products/routes/product');
 const blacklistTokens=require("./users/model/blacklistTokens");
 
 const cors = require('cors');
-const log4js = require('log4js');
+const winston = require('winston');
+require('winston-daily-rotate-file');
 
 // DB Connection
 env.config();
@@ -23,11 +23,36 @@ mongoose.connect(process.env.DB_Connect, { useNewUrlParser: true, useUnifiedTopo
 // connection.on('connected', function(){
 // });
 
-log4js.configure({
-    appenders: { fileAppenders: { type: 'file', filename: './logs/applogs.log' } },
-    categories: {default: { appenders:['fileAppenders'], level:'info' }}
-});
-const logger =  log4js.getLogger("ProductApp");
+
+//---START---- log-4JS
+// log4js.configure({
+//     appenders: { fileAppenders: { type: 'file', filename: './logs/applogs.log' } },
+//     categories: {default: { appenders:['fileAppenders'], level:'info' }}
+// });
+// const logger =  log4js.getLogger("ProductApp");
+//---END---- log-4JS
+
+
+// ---WINSTON--------
+const DATE = new Date();
+
+let loggerCongigurations = {
+    format:winston.format.simple(),
+    level:'verbose',
+    'transports': [
+        new winston.transports.DailyRotateFile({ 
+            name: 'app-log',
+            datePattern: 'YYYY-MM-DD',
+            maxFiles: '365d',
+            filename:'./logs/%DATE%.log',
+        })
+    ]
+}
+
+const logger = winston.createLogger(loggerCongigurations);
+
+// ---WINSTON--End------
+
 
 let corsObject = {
     origin:'*',
