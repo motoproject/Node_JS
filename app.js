@@ -6,6 +6,7 @@ const app = express();
 const env = require('dotenv');
 const auth = require('./users/routes/user');
 const allProducts = require('./products/routes/product');
+const fileOps = require('./filesSystems/fileRouter/fileController');
 
 const blacklistTokens=require("./users/model/blacklistTokens");
 
@@ -56,7 +57,7 @@ const logger = winston.createLogger(loggerCongigurations);
 
 let corsObject = {
     origin:'*',
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, userid, authentication',
     methods: 'OPTIONS, PUT, POST, PATCH, DELETE, GET',
     optionsSuccessStatus: 200,
 }
@@ -65,7 +66,7 @@ app.use(cors(corsObject));
 app.use( async (req, res, next)=>{ 
 
     // log every client request
-    logger.info('Client-Request--IP--'+req.ip+'--url--'+req.originalUrl+"--body--"+req.body);
+    logger.info('Client-Request--'+'--url--'+req.originalUrl+"--body--"+req.body);
 
     let reqHeaders = req.header('Authorization');
     let reqToken;
@@ -108,6 +109,8 @@ app.use('/user/auth', auth);
 // Product routes
 app.use('/products', allProducts);
 
+// files Operations
+app.use('/fs', fileOps);
 
 app.listen(process.env.PORT, ()=>{
     console.log('\n-port---------'+JSON.stringify(process.env.PORT));
