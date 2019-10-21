@@ -22,10 +22,11 @@ const upload = require('../multerModule');
 
 // File Operations
 router.post('/file', upload.single('file'), (req, res)=>{
-
-    res.send(req.file);
+    res.status(200).send(req.file);
 });
 
-// router.post('/multipleFiles', fileUploads.OBJ_MULTER_Multiple, fileUploads.MULTIPLE_FILE_UPLOAD);
+router.post('/multipleFiles', upload.array('multiFiles'), (req, res)=>{
+    res.status(200).send(req.files);
+});
 
 module.exports = router;
