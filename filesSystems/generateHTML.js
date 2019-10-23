@@ -7,6 +7,8 @@ const { buildPathHtml } = require('./buildPaths');
 
 module.exports.createDynamicHtml = async (req, res, next) =>{
 
+    const body = req.body;
+
     /**
      * Take an object which has the following model
      * @param {Object} item 
@@ -85,10 +87,20 @@ module.exports.createDynamicHtml = async (req, res, next) =>{
             .no-content {
               background-color: red;
             }
+            p{
+              font-size: 10px;
+            }
           </style>
         </head>
         <body>
           ${table}
+          <hr/>
+          <div>
+            <p> Total amount: ${body.Totalamount}/-</p>
+            <p> Discount amount: ${body.Discountamount}/-</p>
+            <hr/>
+            <p> Payable amount: ${body.Payableamount}/-</p>
+          </div>
         </body>
       </html>
     `;

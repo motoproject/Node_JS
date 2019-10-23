@@ -38,7 +38,7 @@ router.post('/multipleFiles', upload.array('multiFiles'), (req, res)=>{
     res.status(200).send(req.files);
 });
 
-router.get('/generatePDF', dynamicHtml.createDynamicHtml, async (req, res)=>{
+router.post('/generatePDF', dynamicHtml.createDynamicHtml, async (req, res)=>{
     let pdf = require('html-pdf');
     const { buildPathPdf } = require('../buildPaths');
     let absolutePath = path.resolve('build.html');
