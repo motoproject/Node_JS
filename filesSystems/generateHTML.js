@@ -64,7 +64,9 @@ module.exports.createDynamicHtml = async (req, res, next) =>{
       <html>
         <head>
           <style>
-            table {
+            table{
+              font-family: "Times New Roman", Times, serif;
+              font-size: 10px;
               width: 100%;
             }
             tr {
@@ -72,10 +74,10 @@ module.exports.createDynamicHtml = async (req, res, next) =>{
               border: 1px solid black;
             }
             th, td {
-              padding: 15px;
+              padding: 5px;
             }
             tr:nth-child(odd) {
-              background: #CCC
+              background: #ddd
             }
             tr:nth-child(even) {
               background: #FFF

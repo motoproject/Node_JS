@@ -38,18 +38,50 @@ router.post('/multipleFiles', upload.array('multiFiles'), (req, res)=>{
     res.status(200).send(req.files);
 });
 
-router.get('/generatePDF', dynamicHtml.createDynamicHtml, (req, res)=>{
-    
+router.get('/generatePDF', dynamicHtml.createDynamicHtml, async (req, res)=>{
+    let pdf = require('html-pdf');
+    const { buildPathPdf } = require('../buildPaths');
     let absolutePath = path.resolve('build.html');
-    fs.statSync(absolutePath);
-    res.send("----FILE---GENERATED----------");
+
+    // using html-pdf npm---------------start-----
+    try {
+        fs.statSync(absolutePath);
+
+        // HTML to PDF
+        let html = fs.readFileSync(absolutePath, 'utf8');
+        let options = {
+            format:'A3',
+            border:{
+                'top':'2px',
+                "right": "1px",
+                "bottom": "2px",
+                "left": "1px"
+            }
+        };
+        await pdf.create(html, options).toFile(buildPathPdf, function(err, res){
+            if(err){
+                res.status(400).send(err);
+            }
+            console.log("\n------PDF---GENERATED-----------");
+            
+        });
+
+        res.status(200).send("----PDF---GENERATED----------");
+
+    } catch (error) {
+        res.status(400).send("File Not Found! OR Error ooccured during PDF generation");
+    }
+    // using html-pdf npm---------------end-------
+
+
 });
 
 
 router.get('/downloadFile',(req, res)=>{
 
-    res.sendFile(`${__dirname}/../../../uploads/file4.png`);
-    
+    let absolutePath = path.resolve('build.pdf');
+
+    res.sendFile(absolutePath);
     // let file= path.join(__dirname,'../../uploads')+'/'+req.body.fileName;
     // res.sendFile(file);
 
