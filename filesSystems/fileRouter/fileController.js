@@ -80,16 +80,8 @@ router.post('/generatePDF', dynamicHtml.createDynamicHtml, async (req, res)=>{
 router.get('/downloadFile',(req, res)=>{
 
     let absolutePath = path.resolve('build.pdf');
-
     res.sendFile(absolutePath);
-    // let file= path.join(__dirname,'../../uploads')+'/'+req.body.fileName;
-    // res.sendFile(file);
 
-    // let file = req.params.file;
-    // // res.sendFile('../../uploads/Screenshot from 2019-09-05 13-44-15.png', (err)=>{
-    // //     res.send(err);
-    // // })
-    // console.log(file);
     // res.download(path.join('${../../uploads/}',file), (err)=>{
     //     res.send(err);
     // });
