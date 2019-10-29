@@ -4,6 +4,8 @@ const router = express.Router();
 const upload = require('../multerModule');
 const path = require('path');
 
+const FileModel = require('../fileModel/fileModel');
+
 // file objs --START--
 
 const dynamicHtml = require('../generateHTML');
@@ -26,7 +28,33 @@ const fs = require('fs');
 //     const uploadSingle = multer({ storage: store }).single('file');
 //     const uploadMultiple = multer({ storage: store }).array('files');
 
+router.post('/samplejson',(req, res)=>{
 
+    let fileInstance = new FileModel({});
+    for(let item of req.body){
+        fileInstance = {
+            invoiceId: item.invoiceId,
+            createdDate: item.createdDate,
+            dueDate: item.dueDate,
+            address: item.address,
+            companyName: item.companyName,
+            invoiceName: item.invoiceName,
+            price: item.price
+        }
+    }
+    fileInstance.save()
+    .then(result=>{
+        res.status(200).json({
+            message:'Saved details'
+        })
+    })
+    .catch(err=>{
+        res.status(400).json({
+            error: err
+        })
+    });
+
+});
 
 
 // File Operations
