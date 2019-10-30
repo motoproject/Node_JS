@@ -5,6 +5,7 @@ const upload = require('../multerModule');
 const path = require('path');
 
 const FileModel = require('../fileModel/fileModel');
+const ExcelFile = require('../excelFileOps/excelFileOps');
 
 // file objs --START--
 
@@ -114,5 +115,10 @@ router.get('/downloadFile',(req, res)=>{
     //     res.send(err);
     // });
 });
+
+// Excel File Operations
+
+router.get('/jsontoexcel', ExcelFile.JSON_TO_EXCEL);
+
 
 module.exports = router;
