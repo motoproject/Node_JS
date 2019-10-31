@@ -51,9 +51,9 @@ exports.JSON_TO_EXCEL = async (req, res) =>{
         console.log("\n---ws---added---wb---");
         
         // export file
-        XLSX.writeFile(workbook, 'book.xlsx', {bookType:'xlsx', type:'binary'});
+        await XLSX.writeFile(workbook, 'book.xlsx', {bookType:'xlsx', type:'binary'});
 
-        res.status(200).send("Excel file generated!");
+        res.status(200).json({message:"Excel file generated!"});
 
     } catch (error) {
         res.status(400).send("Error occured while excel creation");
