@@ -10,4 +10,4 @@ const fileSchema = new mongoose.Schema({
     price:{type:Number, required:true},
 });
 
-module.exports = mongoose.model('sampleJson',fileSchema);
+module.exports = mongoose.model('samplejson',fileSchema);

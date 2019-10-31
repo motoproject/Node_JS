@@ -1,13 +1,24 @@
 const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
+const FileModel = require('../fileModel/fileModel');
 
-exports.JSON_TO_EXCEL = (req, res) =>{
+exports.JSON_TO_EXCEL = async (req, res) =>{
 
-    // let selectedFile = ;
-    let data = fs.readFileSync(path.resolve(__dirname,'..','data.json'), "utf-8");
+    let data;
+    data = await FileModel.find({}, {_id:0, _v:0})
+    .catch(err => {
+        res.status(400).send("---Error--Occured--while--fetching--data---");
+    });
+
+    let Obj = {
+        "result": [JSON.stringify(data)]
+    }
+    // Read file
+    // data = fs.readFileSync(path.resolve(__dirname,'..','data.json'), "utf-8");
+
     try {
-        data = JSON.parse(data);
+        data = JSON.parse(Obj.result);
 
         // for(k in data.sampleData){
         //     console.log(k + ":" + JSON.stringify(data.sampleData[k]));                
@@ -19,8 +30,8 @@ exports.JSON_TO_EXCEL = (req, res) =>{
 
 
     try {
-        // convert to array
-        let sampleWS = XLSX.utils.json_to_sheet(data.sampleData);
+        // Create a worksheet
+        let sampleWS = XLSX.utils.json_to_sheet(data);
 
         console.log("\n---done---json-to-sheet--");
 
@@ -43,4 +54,8 @@ exports.JSON_TO_EXCEL = (req, res) =>{
         res.status(400).send("Error occured while excel creation");
     }
 
+}
+
+exports.HTML_TO_EXCEL = (req,res)=>{
+        
 }
