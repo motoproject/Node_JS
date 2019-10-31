@@ -6,7 +6,9 @@ const FileModel = require('../fileModel/fileModel');
 exports.JSON_TO_EXCEL = async (req, res) =>{
 
     let data;
-    data = await FileModel.find({}, {_id:0, _v:0})
+
+    //--------------------- Fetch Details from DB----------------
+    data = await FileModel.find({}, {_id:0, __v:0})
     .catch(err => {
         res.status(400).send("---Error--Occured--while--fetching--data---");
     });
@@ -14,7 +16,10 @@ exports.JSON_TO_EXCEL = async (req, res) =>{
     let Obj = {
         "result": [JSON.stringify(data)]
     }
-    // Read file
+    //--------E------------- Fetch Details from DB----------------
+
+
+    //--------------------- Read file----------------
     // data = fs.readFileSync(path.resolve(__dirname,'..','data.json'), "utf-8");
 
     try {
@@ -54,6 +59,13 @@ exports.JSON_TO_EXCEL = async (req, res) =>{
         res.status(400).send("Error occured while excel creation");
     }
 
+}
+
+exports.DOWNLOAD_EXCEL = (req,res)=>{
+    console.log(req.params.filename);
+    
+    let absolutePath = path.resolve(req.params.filename);
+    res.sendFile(absolutePath);
 }
 
 exports.HTML_TO_EXCEL = (req,res)=>{

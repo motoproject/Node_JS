@@ -8,7 +8,7 @@ const ProductController = require('../controller/product');
 router.post('/addProduct', authCheck, ProductController.POST_ADD_PRODUCT);
 
 // GET - all product details
-router.get('/allProducts', authCheck, ProductController.GET_ALL_PRODUCTS);
+router.get('/allProducts', ProductController.GET_ALL_PRODUCTS);
  
 // GET - specific product details
 router.get('/specificProduct/:id', authCheck, ProductController.GET_SPECIFIC_PRODUCT);

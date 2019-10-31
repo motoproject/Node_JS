@@ -108,5 +108,7 @@ router.get('/downloadFile',(req, res)=>{
 
 router.get('/jsontoexcel', ExcelFile.JSON_TO_EXCEL);
 
+router.get('/downladExcel/:filename', ExcelFile.DOWNLOAD_EXCEL);
+
 
 module.exports = router;
