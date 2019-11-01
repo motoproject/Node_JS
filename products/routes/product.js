@@ -22,4 +22,7 @@ router.delete('/deleteProduct/:id', authCheck, ProductController.DELETE_REMOVE_P
 // Files of Product
 router.get('/getBill', ProductController.READ_BILL_FILE);
 
+// Load more paging 
+router.get('/paging/:id', ProductController.LOAD_MORE_PRODUCTS);
+
 module.exports = router; 

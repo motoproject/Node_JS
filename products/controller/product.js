@@ -5,6 +5,30 @@ const ProductModel = require("../models/product");
 
 const fileMethods = require("../../filesSystems/filesEvents");
 
+exports.LOAD_MORE_PRODUCTS = (req,res)=>{
+    if (req.params.id == 0) {
+        ProductModel.find().limit(10).then(results=>{
+            res.status(200).json({
+                message:'Details fetched successfully!',
+                result:results
+            })
+        }).catch(err=>{
+            res.status(444).json({error:err});
+        });
+        
+    } else {
+
+        ProductModel.find({_id: {$gt:req.params.id} }).limit(10).then(results=>{
+            res.status(200).json({
+                message:'Details fetched successfully!',
+                result:results
+            })
+        }).catch(err=>{
+            res.status(444).json({error:err});
+        });
+    }
+}
+
 // GET - all products
 exports.GET_ALL_PRODUCTS = (req, res)=>{
 
