@@ -9,8 +9,8 @@ const fileMethods = require("../../filesSystems/filesEvents");
 exports.GET_ALL_PRODUCTS = (req, res)=>{
 
     // Using imported model instance
-    ProductModel.find({},{_id:0,__v:0}). 
-    then(results => {
+    ProductModel.find({},{_id:0,__v:0})
+    .then(results => {
         res.status(200).json({
             message: "Details fetched successfully",
             status: 200,
