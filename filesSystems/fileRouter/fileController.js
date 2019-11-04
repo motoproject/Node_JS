@@ -31,10 +31,32 @@ const fs = require('fs');
 
 router.post('/samplejson', async (req, res)=>{
 
-    await FileModel.insertMany(req.body.sampleData)
-    .then(result=>{
+    await FileModel.aggregate([
+        {$group: {_id:null, company_names:{'$addToSet':'$companyName'}}},
+    ])
+
+    //--------------------------- sort ascending / decending
+    // await FileModel.aggregate([
+    //     {$group: {_id:'$price'}},
+    //     {$sort: {_id:-1}}
+    // ])
+
+    //--------------------------- max/min price company name
+    // await FileModel.aggregate([
+    //     {$group: {_id:null, min_price: {$min: '$price'}}}
+    // ])
+
+    //----------------------------------- sum aggregation
+    // await FileModel.aggregate([
+    //     {$project: {_id:0, price:1 }},
+    //     {$group: { _id:null, bill_total: { $sum:'$price' }}}
+    // ])
+
+    // await FileModel.insertMany(req.body.sampleData)
+    .then(results=>{
         res.status(200).json({
-            message:'Saved details'
+            message:'Saved details',
+            result:results
         })
     })
     .catch(err=>{
