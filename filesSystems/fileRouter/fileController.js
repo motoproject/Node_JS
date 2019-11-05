@@ -32,21 +32,28 @@ const fs = require('fs');
 router.post('/samplejson', async (req, res)=>{
 
     await FileModel.aggregate([
-        {$group: {_id:null, company_names:{'$addToSet':'$companyName'}}},
+        {$project:{_id:0, invoiceName:1, price:1, 
+            latest_records: {$gt: ['$price', 250]}
+        }}
     ])
 
-    //--------------------------- sort ascending / decending
+    // --------------------------- Count and array creation in output document
+    // await FileModel.aggregate([
+    //     {$group: {_id:null, No_Of_Companies:{$sum:1}, company_names:{'$addToSet':'$companyName'}}},
+    // ])
+
+    //--------------------------- sort ascending / decending 
     // await FileModel.aggregate([
     //     {$group: {_id:'$price'}},
     //     {$sort: {_id:-1}}
     // ])
 
-    //--------------------------- max/min price company name
+    //--------------------------- max/min price company name 
     // await FileModel.aggregate([
     //     {$group: {_id:null, min_price: {$min: '$price'}}}
     // ])
 
-    //----------------------------------- sum aggregation
+    //----------------------------------- sum aggregation 
     // await FileModel.aggregate([
     //     {$project: {_id:0, price:1 }},
     //     {$group: { _id:null, bill_total: { $sum:'$price' }}}
