@@ -29,13 +29,21 @@ const fs = require('fs');
 //     const uploadSingle = multer({ storage: store }).single('file');
 //     const uploadMultiple = multer({ storage: store }).array('files');
 
-router.post('/samplejson', async (req, res)=>{
+router.post('/samplejson/:id', async (req, res)=>{
+    // --------------------------- mongoose queries -LEAN---POPULATE----------------------------
+    await FileModel.findOne({invoiceId:req.params.id}).populate('address').exec()
+    
+    // --------------------------- mongoose queries -LEAN-------------------------------
+    // await FileModel.find({}).select({_id:0, invoiceName:1, price:1}).lean()
 
-    await FileModel.aggregate([
-        {$project:{_id:0, invoiceName:1, price:1, 
-            latest_records: {$gt: ['$price', 250]}
-        }}
-    ])
+    // --------------------------- E M-Q -------------------------------------------
+
+    // --------------------------- comparison expressions 
+    // await FileModel.aggregate([
+    //     {$project:{_id:0, invoiceName:1, price:1, 
+    //         latest_records: {$gt: ['$price', 250]}
+    //     }}
+    // ])
 
     // --------------------------- Count and array creation in output document
     // await FileModel.aggregate([
