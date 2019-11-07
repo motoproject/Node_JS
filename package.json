@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "babel-node app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.7.0",
     "@hapi/joi": "^15.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -30,5 +31,10 @@
     "winston-daily-rotate-file": "^4.2.1",
     "xlsx": "^0.15.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
 }

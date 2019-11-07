@@ -4,7 +4,9 @@ const router = express.Router();
 const upload = require('../multerModule');
 const path = require('path');
 
-const FileModel = require('../fileModel/fileModel');
+// const FileModel = require('../fileModel/fileModel');
+import FileModel  from '../fileModel/fileModel';
+
 const ExcelFile = require('../excelFileOps/excelFileOps');
 
 // file objs --START--
@@ -29,9 +31,35 @@ const fs = require('fs');
 //     const uploadSingle = multer({ storage: store }).single('file');
 //     const uploadMultiple = multer({ storage: store }).array('files');
 
+const ES6Test = ()=>{
+    // --------------- ES6 -------------------
+    const person = {
+        name:'pqwoe',
+        age:'23',
+        email:'asdafdfgdfgeter'
+    }
+
+    const address = { 
+        street:'dasdadasdasd',
+        city:'asjh',
+        state:'kn,mnkjdf'
+    }
+
+    const details = {
+        ...person,
+        ...address
+    }
+    console.log(details);
+    return details;
+}
+
+
 router.post('/samplejson/:id', async (req, res)=>{
+
+    
+
     // --------------------------- mongoose queries -LEAN---POPULATE----------------------------
-    await FileModel.findOne({invoiceId:req.params.id}).populate('address').exec()
+    await FileModel.findOne({invoiceId:req.params.id}).lean()
     
     // --------------------------- mongoose queries -LEAN-------------------------------
     // await FileModel.find({}).select({_id:0, invoiceName:1, price:1}).lean()
