@@ -59,7 +59,9 @@ router.post('/samplejson/:id', async (req, res)=>{
     
 
     // --------------------------- mongoose queries -LEAN---POPULATE----------------------------
-    await FileModel.findOne({invoiceId:req.params.id}).lean()
+    FileModel.findOne({invoiceId:req.params.id})
+    .populate('address')
+    .exec()
     
     // --------------------------- mongoose queries -LEAN-------------------------------
     // await FileModel.find({}).select({_id:0, invoiceName:1, price:1}).lean()

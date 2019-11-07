@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node app.js"
+    "start": "nodemon app.js --exec babel-node --preset env"
   },
   "author": "",
   "license": "ISC",
