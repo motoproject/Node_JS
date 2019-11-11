@@ -8,6 +8,7 @@ const path = require('path');
 import FileModel  from '../fileModel/fileModel';
 
 const ExcelFile = require('../excelFileOps/excelFileOps');
+import Mongoose from 'mongoose';
 
 // file objs --START--
 
@@ -54,14 +55,34 @@ const ES6Test = ()=>{
 }
 
 
-router.post('/samplejson/:id', async (req, res)=>{
-
+router.get('/samplejson/:id', async (req, res)=>{
+    console.log(req.params.id);
     
+    const id = req.params.id;
+
+    await FileModel.findOne({_id:id}).populate('address').exec().then(results=>{
+        console.log(results);
+        res.status(200).json({results});
+    }).catch(err=>{
+        console.log(err);
+        res.status(400).send(err);
+    })
+    // .exec((err, result)=>{
+    //     console.log(err);
+    //     console.log(result);
+    //     res.status(200).send(result);
+    // })
+});
+
+router.post('/samplejson', async (req, res)=>{
+
+    // ------------------------------- INSERT MANY
+    FileModel.insertMany(req.body.sampleData)
 
     // --------------------------- mongoose queries -LEAN---POPULATE----------------------------
-    FileModel.findOne({invoiceId:req.params.id})
-    .populate('address')
-    .exec()
+    // FileModel.findOne({invoiceId:req.params.id})
+    // .populate('address')
+    // .exec()
     
     // --------------------------- mongoose queries -LEAN-------------------------------
     // await FileModel.find({}).select({_id:0, invoiceName:1, price:1}).lean()
@@ -100,8 +121,7 @@ router.post('/samplejson/:id', async (req, res)=>{
     // await FileModel.insertMany(req.body.sampleData)
     .then(results=>{
         res.status(200).json({
-            message:'Saved details',
-            result:results
+            message:'Saved details'
         })
     })
     .catch(err=>{

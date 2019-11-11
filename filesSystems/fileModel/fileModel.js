@@ -1,6 +1,10 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+
+import mongoose from 'mongoose';
+
 
 const fileSchema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     invoiceId: {type:Number, required:true, min:1},
     createdDate: {type:Date, required:true},
     dueDate: {type:Date, required:true},
