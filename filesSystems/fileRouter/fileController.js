@@ -5,7 +5,8 @@ const upload = require('../multerModule');
 const path = require('path');
 
 // const FileModel = require('../fileModel/fileModel');
-import FileModel  from '../fileModel/fileModel';
+import {FileModel}  from '../fileModel/fileModel';
+import embeddedjson from '../fileModel/embeddedMonel';
 
 const ExcelFile = require('../excelFileOps/excelFileOps');
 import Mongoose from 'mongoose';
@@ -54,19 +55,46 @@ const ES6Test = ()=>{
     return details;
 }
 
+router.get('/getEB/:title', async (req, res)=>{
+    await embeddedjson.find().populate('pages').exec((data)=>{
+        console.log(data);
+        res.send(data)
+    })
+    // .then((result)=>{
+    //     res.json(result)
+    // }).catch(err=>{
+    //     res.send(err);
+    // })
+});
+
+router.post('/embeddedjson', (req, res)=>{
+    embeddedjson.insertMany(req.body.bookdetails).then(result=>{
+        res.status(200).json(
+            {message:'saved successfully'}
+        )
+    }).catch(err=>{
+        res.status(400).send(err);
+    })
+});
+
 
 router.get('/samplejson/:id', async (req, res)=>{
     console.log(req.params.id);
     
     const id = req.params.id;
 
-    await FileModel.findOne({_id:id}).populate('address').exec().then(results=>{
+    await FileModel.findOne({_id:id})
+    // .populate('address')
+    .then(results=>{
         console.log(results);
-        res.status(200).json({results});
+        res.status(200).json(results);
     }).catch(err=>{
         console.log(err);
         res.status(400).send(err);
     })
+
+
+
     // .exec((err, result)=>{
     //     console.log(err);
     //     console.log(result);
