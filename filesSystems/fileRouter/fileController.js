@@ -7,11 +7,10 @@ const path = require('path');
 // const FileModel = require('../fileModel/fileModel');
 import {FileModel}  from '../fileModel/fileModel';
 import embeddedjson from '../fileModel/embeddedMonel';
-
-const ExcelFile = require('../excelFileOps/excelFileOps');
 import Mongoose from 'mongoose';
 
 // file objs --START--
+const ExcelFile = require('../excelFileOps/excelFileOps');
 
 const dynamicHtml = require('../generateHTML');
 const fs = require('fs');
