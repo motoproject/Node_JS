@@ -8,6 +8,8 @@ const auth = require('./users/routes/user');
 const allProducts = require('./products/routes/product');
 const fileOps = require('./filesSystems/fileRouter/fileController');
 
+import usrp from './posts/Routes/userPost';
+
 const blacklistTokens=require("./users/model/blacklistTokens");
 
 const cors = require('cors');
@@ -111,7 +113,7 @@ app.use('/products', allProducts);
 
 // files Operations
 app.use('/fs', fileOps);
-
+app.use('/usrpost', usrp);
 app.listen(process.env.PORT, ()=>{
     console.log('\n-port---------'+JSON.stringify(process.env.PORT));
 });
