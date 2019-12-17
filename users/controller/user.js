@@ -72,6 +72,7 @@ module.exports.POST_LOGIN = async (req, res)=>{
 
     const token = jwt.sign({_id: validUser[0]._id}, process.env.TOKEN_KEY, { expiresIn: process.env.TOKEN_EXPIRY_TIME });
     res.status(200).json({token: token,
+        userRole: 'user'
     });
 
 }
